@@ -28,7 +28,8 @@ import {
   ADMIN_INTERFACE,
   VOTING_MODES,
   VETO_TOKEN_VOTING_INTERFACE,
-  MULTISIG_INTERFACE
+  MULTISIG_INTERFACE,
+  VETO_MULTISIG_INTERFACE, VETO_TOKEN_2_VOTING_INTERFACE
 } from '../utils/constants';
 import {supportsInterface} from '../utils/erc165';
 import {fetchERC20} from '../utils/tokens/erc20';
@@ -159,6 +160,10 @@ export function addPlugin(daoId: string, plugin: Address): void {
     contract,
     VETO_TOKEN_VOTING_INTERFACE
   );
+  let tokenVoting2InterfaceSupported = supportsInterface(
+    contract,
+    VETO_TOKEN_2_VOTING_INTERFACE
+  );
   let addresslistInterfaceSupported = supportsInterface(
     contract,
     ADDRESSLIST_VOTING_INTERFACE
@@ -169,13 +174,18 @@ export function addPlugin(daoId: string, plugin: Address): void {
     MULTISIG_INTERFACE
   );
 
-  if (tokenVotingInterfaceSupported) {
+  let vetoMultisigInterfaceSupported = supportsInterface(
+    contract,
+    VETO_MULTISIG_INTERFACE
+  );
+
+  if (tokenVotingInterfaceSupported || tokenVoting2InterfaceSupported) {
     createTokenVotingPlugin(plugin, daoId);
   } else if (addresslistInterfaceSupported) {
     createAddresslistVotingPlugin(plugin, daoId);
   } else if (adminInterfaceSupported) {
     createAdminPlugin(plugin, daoId);
-  } else if (multisigInterfaceSupported) {
+  } else if (multisigInterfaceSupported || vetoMultisigInterfaceSupported) {
     createMultisigPlugin(plugin, daoId);
   }
 }

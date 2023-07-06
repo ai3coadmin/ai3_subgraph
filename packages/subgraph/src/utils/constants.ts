@@ -25,9 +25,11 @@ export const VOTING_MODE_INDEXES = new Map<string, string>()
 
 export const TOKEN_VOTING_INTERFACE = '0x50eb001e';
 export const VETO_TOKEN_VOTING_INTERFACE = '0x62314c92';
+export const VETO_TOKEN_2_VOTING_INTERFACE = '0xb96953fd';
 export const ADDRESSLIST_VOTING_INTERFACE = '0x5f21eb8b';
 export const ADMIN_INTERFACE = '0xa5793356';
 export const MULTISIG_INTERFACE = '0x8f852786';
+export const VETO_MULTISIG_INTERFACE = '0x69d71962';
 export const WRAPPED_ERC20_INTERFACE = '0x12cdd3ac';
 
 export const RATIO_BASE = '1000000'; // 10**6
